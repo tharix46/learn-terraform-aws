@@ -2,7 +2,7 @@
 
 ### What are Providers?
 
-Bridge between Terraform and the APIs of cloud providers, SaaS providers, and other services. In simple Providers are plugins.
+Bridge between Terraform and the APIs of cloud providers, SaaS providers, and other services. In simple, Providers are plugins.
 They enable Terraform to manage resources on these platforms by translating Terraform configurations into API calls.
 
 For AWS, we use the **hashicorp/aws provider**.
@@ -31,9 +31,19 @@ Terraform and Providers have independent versioning and release cycles.
 ### Version Constraints
 
 - `= 1.2.3` - Exact version
+- `!= 1.2.3` - anything except this version
+- `> 1.2` - Greater than
+- `< 1.2` - Less than
 - `>= 1.2` - Greater than or equal to
 - `<= 1.2` - Less than or equal to
-- `~> 1.2` - Pessimistic constraint (allow patch releases)
+- `~> 1.2` - Pessimistic constraint (>= 1.2.0, < 2.0.0)
 - `>= 1.2, < 2.0` - Range constraint
 
 ---
+
+### Best Practices
+
+1. Always specify provider versions
+2. Use pessimistic constraints for stability
+3. Test provider upgrades in development first
+4. Use `terraform providers lock` command for consistency
