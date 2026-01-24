@@ -67,3 +67,12 @@ terraform {
 - **required_providers** is for the provider version.
 
 ---
+
+### What Terraform Actually Does When You Mention Versions
+
+- When you run `terraform init`, Terraform downloads the provider plugin that matches the version constraint you specified.
+- Terraform stores the downloaded provider plugin in a local cache.
+- If your installed Terraform doesn’t match required_version → error
+- If existing provider version doesn’t match → Terraform fetches the correct one from registry
+
+> Terraform locks these versions in.terraform.lock.hcl
