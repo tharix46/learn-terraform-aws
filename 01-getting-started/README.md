@@ -32,9 +32,10 @@ Write Terraform files → Run Terraform commands → Call AWS APIs through Terra
 
 1. `terraform init` - Initialize the working directory
 2. `terraform validate` - Validate the configuration files
-3. `terraform plan` - Create an execution plan
-4. `terraform apply` - Apply the changes to reach desired state
-5. `terraform destroy` - Destroy the infrastructure when needed
+3. `terraform fmt` - Format the configuration files
+4. `terraform plan` - Create an execution plan
+5. `terraform apply` - Apply the changes to reach desired state
+6. `terraform destroy` - Destroy the infrastructure when needed
 
 ---
 
