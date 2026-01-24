@@ -36,8 +36,7 @@ Terraform and Providers have independent versioning and release cycles.
 - `< 1.2` - Less than
 - `>= 1.2` - Greater than or equal to
 - `<= 1.2` - Less than or equal to
-- `~> 1.2` - Pessimistic constraint (>= 1.2.0, < 2.0.0)
-- `>= 1.2, < 2.0` - Range constraint
+- `~> 1.2` - Pessimistic constraint
 
 ---
 
@@ -47,3 +46,24 @@ Terraform and Providers have independent versioning and release cycles.
 2. Use pessimistic constraints for stability
 3. Test provider upgrades in development first
 4. Use `terraform providers lock` command for consistency
+
+---
+
+### Example Provider Configuration
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "~> 6.25.0"
+    }
+  }
+  required_version = "~> 1.14.0"
+}
+```
+
+- **required_version** is for the terraform version.
+- **required_providers** is for the provider version.
+
+---
