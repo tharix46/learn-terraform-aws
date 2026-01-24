@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "~> 6.25.0"
     }
   }
@@ -11,4 +11,7 @@ terraform {
 
 provider "aws" {
   # Configuration options
+  # provider uses ~/.aws/credentials for credentials
+  # pick another profile instead of default profile can be done using profile option
+  # profile = "my-profile"
 }
