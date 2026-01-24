@@ -71,8 +71,29 @@ terraform {
 ### What Terraform Actually Does When You Mention Versions
 
 - When you run `terraform init`, Terraform downloads the provider plugin that matches the version constraint you specified.
-- Terraform stores the downloaded provider plugin in a local cache.
+- Terraform stores the downloaded provider plugin under `.terraform/providers/`.
 - If your installed Terraform doesn’t match required_version → error
 - If existing provider version doesn’t match → Terraform fetches the correct one from registry
 
-> Terraform locks these versions in.terraform.lock.hcl
+> Terraform locks these versions in `.terraform.lock.hcl`.
+
+---
+
+### Terraform Providers Lock
+
+Running `terraform init` will automatically generate or update `.terraform.lock.hcl`.
+
+But when you want to update or generate lock files for multiple platforms, you can use the `terraform providers lock` command.
+
+**Example:**
+
+You use mac, but your GitHub Actions runner uses linux.
+Each platform has different provider binaries → different checksums.
+
+```bash
+# creates correct lock entries for your CI/CD pipeline
+# This adds linux_amd64 checksums to the existing .terraform.lock.hcl file without removing your Mac checksums.
+terraform providers lock --platform=linux_amd64
+```
+
+---
