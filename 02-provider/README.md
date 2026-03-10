@@ -13,8 +13,8 @@ For AWS, we use the **hashicorp/aws provider**.
 
 Terraform and Providers have independent versioning and release cycles.
 
-- Terraform Version: The version of the Terraform CLI tool itself.
-- Provider Version: The version of a specific provider plugin (e.g., AWS, Azure, GCP) that Terraform uses to interact with a particular service.
+- **Terraform Version**: The version of the Terraform CLI tool itself.
+- **Provider Version**: The version of a specific provider plugin (e.g., AWS, Azure, GCP) that Terraform uses to interact with a particular service.
 
 ---
 
@@ -56,15 +56,15 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      version = "~> 6.25.0"
+      version = "~> 6.32.1"
     }
   }
   required_version = "~> 1.14.0"
 }
 ```
 
-- **required_version** is for the terraform version.
 - **required_providers** is for the provider version.
+- **required_version** is for the terraform version.
 
 ---
 
