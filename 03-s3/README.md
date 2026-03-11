@@ -23,7 +23,10 @@ tf init
 # validate configuration
 tf validate
 
-# plan changes
+# format configuration
+tf fmt
+
+# generate plan
 tf plan
 
 # apply changes
