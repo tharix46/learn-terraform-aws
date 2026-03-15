@@ -5,6 +5,15 @@ terraform {
       version = "~> 6.35"
     }
   }
+
+  backend "s3" {
+    bucket = "tf-state-test-bucket-982739"
+    key    = "dev/terraform.tfstate"
+    region = "us-east-1"
+    encrypt = true
+    use_lockfile = true
+  }
+
   required_version = "~> 1.14.0"
 }
 
