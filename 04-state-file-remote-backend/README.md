@@ -1,4 +1,4 @@
-# State File Management & Remote Backend
+# State File & Remote Backend
 
 ### Terraform State File
 
@@ -24,7 +24,7 @@ The state file is a **JSON file** that contains:
 
 ### How Terraform Updates Infrastructure
 
-Terraform uses `terraform.tfstate` file to **keep track of the actual state**. This file should be kept as a confidential file and should not commit to the version control.
+Terraform uses `terraform.tfstate` (_state file_) to **keep track of the actual state**. This file should be kept as a confidential file and should not commit to the version control.
 
 **Two important concepts:**
 1. **Desired state**: the infrastructure that we want to create
@@ -39,4 +39,40 @@ To do that, Terraform compares actual state (from `terraform.tfstate` file) with
 
 Remote backend is where we store the `terraform.tfstate` file. 
 
-When we run `terraform apply`, terraform will check the state file in the remote backend. This bucket should be already available when we run `terraform apply` as this contains the state file.
+We can use **S3** as a remote backend and it has **S3 native state locking** using S3's **Conditional Writes** feature (_useful when multiple team members are working on the same infrastructure_).
+
+When we run `terraform apply`, terraform will check the state file in the remote backend **S3 bucket** (_This bucket should be already available when we run `terraform apply` as this contains the state file._).
+
+> **Important**: S3 versioning MUST be enabled for S3 native state locking to work properly.
+
+---
+
+### Why Use Remote Backend
+
+- **Collaboration**: Team members can share state
+- **Locking**: Prevents concurrent state modifications
+- **Security**: Encrypted storage and access control
+- **Backup**: Automatic versioning and backup
+- **Durability**: Highly available storage
+
+---
+
+### Commands to Run
+
+```bash
+# initialize with new backend configuration
+tf init
+
+tf validate
+tf fmt
+tf plan
+tf apply
+
+# verify state is now remote
+tf state list
+
+# pull current state and display
+tf state pull
+```
+
+---
