@@ -107,3 +107,5 @@ mkdir -p ~/.terraform.d/plugin-cache
 touch ~/.terraformrc
 
 echo 'plugin_cache_dir = "/home/yourusername/.terraform.d/plugin-cache"' >> ~/.terraformrc
+```
+
