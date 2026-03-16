@@ -97,3 +97,13 @@ terraform providers lock --platform=linux_amd64
 ```
 
 ---
+
+### Global Plugin Cache
+
+This is NOT ENABLED BY DEFAULT. If enabled (_stop wasting bandwidth and disk space_), Terraform checks here before downloading the provider from the internet.
+
+```bash
+mkdir -p ~/.terraform.d/plugin-cache
+touch ~/.terraformrc
+
+echo 'plugin_cache_dir = "/home/yourusername/.terraform.d/plugin-cache"' >> ~/.terraformrc
