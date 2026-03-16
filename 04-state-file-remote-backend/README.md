@@ -68,7 +68,7 @@ tf fmt
 tf plan
 tf apply
 
-# verify state is now remote
+# list resources in state
 tf state list
 
 # pull current state and display
