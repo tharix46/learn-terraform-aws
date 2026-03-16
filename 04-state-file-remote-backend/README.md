@@ -61,7 +61,7 @@ When we run `terraform apply`, terraform will check the state file in the remote
 
 ```bash
 # initialize with new backend configuration
-tf init
+tf init --auto-approve
 
 tf validate
 tf fmt
@@ -73,6 +73,8 @@ tf state list
 
 # pull current state and display
 tf state pull
+
+tf destroy --auto-approve
 ```
 
 ---
