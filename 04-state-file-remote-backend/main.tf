@@ -10,7 +10,7 @@ terraform {
     # s3 bucket name for state storage
     bucket = "tf-state-test-bucket-982739"
     # state file path within the bucket
-    key    = "dev/terraform.tfstate"
+    key = "dev/terraform.tfstate"
     # s3 bucket region
     region = "us-east-1"
     # encrypt state file
