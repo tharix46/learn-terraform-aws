@@ -82,3 +82,49 @@ terraform plan
 
 ---
 
+### 2. Output Variables (outputs.tf)
+
+Values you want to output from Terraform - like function return values. 
+
+They display important information after Terraform creates your infrastructure.
+
+```hcl
+# define in outputs.tf
+
+# output a resource attribute (bucket name)
+output "bucket_name" {
+  description = "name of the S3 bucket"
+  value       = aws_s3_bucket.demo-s3-bucket.bucket
+}
+
+# output multiple values
+output "bucket_details" {
+  description = "bucket details"
+  value = {
+    name = aws_s3_bucket.demo-s3-bucket.bucket
+    arn  = aws_s3_bucket.demo-s3-bucket.arn
+  }
+}
+
+# output an input variable (to confirm what was used)
+output "environment" {
+  description = "environment from input variable"
+  value       = var.environment
+}
+```
+
+```bash
+# after running terraform apply, you can view outputs
+
+# show all outputs
+terraform output                    
+
+# show specific output
+terraform output bucket_name        
+
+# show all outputs in JSON format
+terraform output -json              
+```
+
+---
+
