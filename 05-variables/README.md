@@ -60,14 +60,15 @@ resource "aws_s3_bucket" "demo-s3-bucket" {
 tf plan -var="environment=staging" -var="bucket_name=tf-demo-bucket"
 
 # using -var-file
-tf plan -var-file="terraform.tfvars"
+tf plan -var-file="dev.tfvars"
+tf plan -var-file="prod.tfvars"
 ```
 
 2. Variable files (`.tfvars`)
 ```hcl
 # in terraform.tfvars
 environment = "staging"
-bucket_name = "terraform-demo-bucket"
+bucket_name = "tf-demo-bucket"
 ```
 
 3. Environment variables (`TF_VAR_` prefix)
@@ -86,7 +87,7 @@ terraform plan
 
 Values you want to output from Terraform - like function return values. 
 
-They display important information after Terraform creates your infrastructure.
+They **display** important information **after Terraform creates your infrastructure**.
 
 ```hcl
 # define in outputs.tf
@@ -117,14 +118,60 @@ output "environment" {
 # after running terraform apply, you can view outputs
 
 # show all outputs
-terraform output                    
+tf output                    
 
 # show specific output
-terraform output bucket_name        
+tf output bucket_name        
 
 # show all outputs in JSON format
-terraform output -json              
+tf output -json              
 ```
 
 ---
 
+### 3. Local Variables (locals.tf)
+
+Internal computed values - like local variables in programming
+
+```hcl
+locals {
+  # common tags applied to all resources
+  common_tags = {
+    Environment = var.environment
+    Project     = "tf-demo"
+    Owner       = "devops-team"
+  }
+
+  # full bucket name with environment prefix
+  full_bucket_name = "${var.environment}-${var.bucket_name}-${random_string.suffix.result}"
+}
+```
+
+---
+
+### What This Project (05-variables) Does?
+
+This project creates a simple S3 bucket that demonstrates all three variable types:
+
+- Uses input variables for environment and bucket name
+- Uses local variables for computed bucket name and tags
+- Uses output variables to show the created bucket details
+
+---
+
+### Terraform Commands I Used
+
+```bash
+tf init 
+tf validate
+tf fmt
+tf plan
+
+tf apply --auto-approve
+
+tf output
+
+tf destroy --auto-approve
+```
+
+---
