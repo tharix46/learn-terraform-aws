@@ -113,7 +113,6 @@ output "environment" {
   value       = var.environment
 }
 ```
-
 ```bash
 # after running terraform apply, you can view outputs
 
@@ -170,6 +169,9 @@ tf plan
 tf apply --auto-approve
 
 tf output
+
+tf providers lock --platform=linux_amd64
+
 
 tf destroy --auto-approve
 ```
