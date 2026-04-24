@@ -161,7 +161,7 @@ This project creates a simple S3 bucket that demonstrates all three variable typ
 ### Terraform Commands I Used
 
 ```bash
-tf init -backend-config="key=dev/terraform.tfstate"
+tf init -backend-config="dev.backend.hcl"
 tf validate
 tf fmt
 tf plan
