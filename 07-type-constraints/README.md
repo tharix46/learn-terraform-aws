@@ -59,7 +59,7 @@ Groups of values of the **same data type**.
     - Cannot be accessed by index directly. Use `tolist(var.my_set)[0]` if needed
 
 3. Map
-    - Key-value pairs with string keys.
+    - Key-value pairs where **keys are always strings** and **values must all be the same type**.
     - _Example:_ `tags = { Name = "web-server", Env = "Dev" }` -> `var.tags["Name"]`
 
 ---
