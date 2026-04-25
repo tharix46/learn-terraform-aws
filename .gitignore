@@ -2,5 +2,6 @@
 terraform.tfstate
 terraform.tfstate.backup
 crash.log
+*.log
 .DS_Store
 todo.txt
