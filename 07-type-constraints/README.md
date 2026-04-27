@@ -29,7 +29,7 @@ Simple, single-value data types.
 | Type | Description | Example |
 | :--- | :--- | :--- |
 | **string** | Text wrapped in double quotes. | `"t2.micro"` |
-| **number** | Numeric values (integer or float). | `1` or `0.0.0.0/0` |
+| **number** | Numeric values (integer or float). | `1` or `0.0123456` |
 | **bool** | Boolean logic values. | `true` or `false` |
 
 ---
@@ -38,7 +38,7 @@ Simple, single-value data types.
 
 - Has **multiple values**.
 - Can be **homogeneous** _(all values are the same type)_. 
-   _Example:_ `list(string)`, `map(string)`
+   _Example:_ `list(string)`, `set(string)`, `map(string)`
 - Or **heterogeneous** _(values can be of different types)_.
    _Example:_ `tuple([string, number, bool])`, `object({ name = string, age = number, active = bool })`
 
@@ -51,16 +51,25 @@ Groups of values of the **same data type**.
 1. List
     - Ordered sequence of values.
     - Accessed by **index (starts at 0)**.
-    - _Example:_ `["us-east-1a", "us-east-1b"]` -> `var.subnets[0]`
+    - _Example:_ `["t2.micro", "t2.small", "t3.micro"]`  -> `var.list_name[0]`
 
 2. Set
     - Unordered collection of unique values.
     - Automatically removes duplicates.
-    - Cannot be accessed by index directly. Use `tolist(var.my_set)[0]` if needed
+    - Cannot be accessed by index directly. Use `tolist(var.set_name)[0]` if needed
+    - _Example:_ `["us-east-1a", "us-east-1b", "us-east-1c"]` -> `tolist(var.set_name)[0]`
 
 3. Map
     - Key-value pairs where **keys are always strings** and **values must all be the same type**.
-    - _Example:_ `tags = { Name = "web-server", Env = "Dev" }` -> `var.tags["Name"]`
+    - can be accessed using `var.map_name[key]`
+    - _Example:_ 
+```hcl
+{ 
+    Name = "web-server"
+    Env = "Dev"
+    Project = "tf-demo"
+}
+```
 
 ---
 
@@ -71,20 +80,18 @@ Complex structures that can hold **different data types**.
 1. Tuple
     - Fixed-length, ordered sequence.
     - Supports different types in a specific position.
-    - _Example:_ `[80, "TCP", true]`
+    - _Example:_ `[80, "TCP", true]` -> `var.tuple_name[0]`
 
 2. Object
     - Collection of named attributes with different types.
     - Best for complex resource configurations.
-    - _Example:_
-
+    - can be accessed using `var.object_name["attribute_name"]`
+    - _Example:_ 
 ```hcl
-variable "instance_config" {
-  type = object({
-    count   = number
-    ami     = string
-    public  = bool
-  })
+{
+    instance_type = "t2.micro"
+    instance_count = 1
+    monitoring = true
 }
 ```
 
