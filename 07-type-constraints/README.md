@@ -21,7 +21,6 @@ We can categorize variables:
 
 ---
 
-
 ### Primitive Types
 
 Simple, single-value data types.
