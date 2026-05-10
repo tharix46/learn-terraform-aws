@@ -96,8 +96,25 @@ Complex structures that can hold **different data types**.
 
 ---
 
-### Key Takeaways
+### Other Important Notes
 
 - **null**: Represents the absence of a value.
 - **any**: A placeholder that lets Terraform determine the type (use sparingly).
 - **Strict Typing**: If you define a type (e.g., `list(string)`), passing a `number` will trigger a validation error.
+
+---
+
+### Terraform Commands Used in This Folder
+
+```bash
+tf init -backend-config="dev.backend.hcl"
+tf validate
+tf fmt
+terraform plan -var-file="dev.tfvars"
+
+terraform apply -auto-approve -var-file="dev.tfvars"
+
+terraform destroy -auto-approve
+```
+
+---
