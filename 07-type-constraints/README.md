@@ -110,11 +110,11 @@ Complex structures that can hold **different data types**.
 tf init -backend-config="dev.backend.hcl"
 tf validate
 tf fmt
-terraform plan -var-file="dev.tfvars"
+tf plan -var-file="dev.tfvars"
 
-terraform apply -auto-approve -var-file="dev.tfvars"
+tf apply -auto-approve -var-file="dev.tfvars"
 
-terraform destroy -auto-approve
+tf destroy -auto-approve
 ```
 
 ---
