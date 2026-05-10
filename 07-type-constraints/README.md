@@ -110,6 +110,7 @@ Complex structures that can hold **different data types**.
 tf init -backend-config="dev.backend.hcl"
 tf validate
 tf fmt
+
 tf plan -var-file="dev.tfvars"
 
 tf apply -auto-approve -var-file="dev.tfvars"
