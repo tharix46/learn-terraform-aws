@@ -60,7 +60,7 @@ Groups of values of the **same data type**.
 
 3. Map
     - Key-value pairs where **keys are always strings** and **values must all be the same type**.
-    - can be accessed using `var.map_name[key]`
+    - can be accessed using `var.map_name["key"]`
     - _Example:_ 
 ```hcl
 { 
@@ -84,7 +84,7 @@ Complex structures that can hold **different data types**.
 2. Object
     - Collection of named attributes with different types.
     - Best for complex resource configurations.
-    - can be accessed using `var.object_name["attribute_name"]`
+    - can be accessed using `var.object_name["key"]`
     - _Example:_ 
 ```hcl
 {
