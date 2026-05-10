@@ -1,4 +1,4 @@
-# Provider
+# PROVIDER
 
 The provider meta-argument (used inside a resource) allows you to choose which specific provider configuration to use for a single resource.
 
