@@ -100,7 +100,11 @@ terraform providers lock --platform=linux_amd64
 
 ### Global Plugin Cache
 
-This is NOT ENABLED BY DEFAULT. If enabled (_stop wasting bandwidth and disk space_), Terraform checks here before downloading the provider from the internet.
+This is **NOT ENABLED BY DEFAULT**. 
+
+When enabled, Terraform downloads provider plugins to a shared directory under your home folder (`~/.terraform.d/plugin-cache`) instead of inside each project's `.terraform/` folder. 
+
+This means multiple projects can reuse the same cached provider binary rather than each project downloading its own copy — saving bandwidth and disk space.
 
 ```bash
 mkdir -p ~/.terraform.d/plugin-cache
@@ -108,4 +112,5 @@ touch ~/.terraformrc
 
 echo 'plugin_cache_dir = "/home/yourusername/.terraform.d/plugin-cache"' >> ~/.terraformrc
 ```
+---
 
