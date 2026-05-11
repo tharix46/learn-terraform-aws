@@ -79,11 +79,11 @@ terraform {
 
 ---
 
-### Terraform Providers Lock
+### `terraform providers lock`
 
-Running `terraform init` will automatically generate or update `.terraform.lock.hcl`.
+Running `terraform init` will automatically generate `.terraform.lock.hcl`.
 
-But when you want to update or generate lock files for multiple platforms, you can use the `terraform providers lock` command.
+But when you want to update lock files for multiple platforms, you can use the `terraform providers lock` command.
 
 **Example:**
 
@@ -112,5 +112,19 @@ touch ~/.terraformrc
 
 echo 'plugin_cache_dir = "/home/yourusername/.terraform.d/plugin-cache"' >> ~/.terraformrc
 ```
+
 ---
 
+### `terraform init -upgrade`
+
+If you change the version constraint in `terraform {}` block in a project with existing `.terraform.lock.hcl` file, `terraform init` will **not** update the installed provider.
+
+e.g., you change provider version from `~> 6.35` to `~> 6.44`.
+
+To force Terraform to update to the new version, you must use the `-upgrade` flag:
+
+```bash
+terraform init -upgrade
+```
+
+---
