@@ -31,6 +31,9 @@ tf plan
 
 # apply changes
 tf apply -auto-approve
+
+# generate lock file for linux_amd64
+tf providers lock --platform=linux_amd64
 ```
 
 ```bash
