@@ -71,8 +71,11 @@ tf apply --auto-approve
 # list resources in state
 tf state list
 
-# pull current state and display
+# pull current state and display as raw JSON
 tf state pull
+
+# generate lock file for linux_amd64
+tf providers lock --platform=linux_amd64
 
 tf destroy --auto-approve
 ```
