@@ -18,8 +18,3 @@ output "environment" {
   description = "environment from input variable"
   value       = var.environment
 }
-
-output "tags" {
-  description = "Tags from local variable"
-  value       = local.common_tags
-}
