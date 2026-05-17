@@ -43,7 +43,7 @@ Simple, single-value data types.
 
 ---
 
-### Collection Types (Homogeneous)
+### Homogeneous
 
 Groups of values of the **same data type**.
 
@@ -72,7 +72,7 @@ Groups of values of the **same data type**.
 
 ---
 
-### Structural Types (Heterogeneous)
+### Heterogeneous
 
 Complex structures that can hold **different data types**.
 

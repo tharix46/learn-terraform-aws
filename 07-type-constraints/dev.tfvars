@@ -1,4 +1,4 @@
 region         = "us-east-1"
-environment    = "Dev"
-project        = "Terraform-Demo"
+environment    = "dev"
+project        = "terraform-demo"
 instance_count = 1
