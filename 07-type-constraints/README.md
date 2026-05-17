@@ -118,3 +118,7 @@ tf destroy -auto-approve
 ```
 
 ---
+
+### What This Project (07-type-constraints) Does?
+
+This project creates an EC2 instance and demonstrates the use of type constraints in Terraform.
