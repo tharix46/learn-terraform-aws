@@ -7,13 +7,13 @@ variable "region" {
 variable "environment" {
   description = "environment name"
   type        = string
-  default     = "Dev"
+  default     = "dev"
 }
 
-variable "Project" {
+variable "project" {
   description = "project name"
   type        = string
-  default     = "Terraform-Demo"
+  default     = "terraform-demo"
 }
 
 variable "instance_count" {
