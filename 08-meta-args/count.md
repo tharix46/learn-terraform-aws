@@ -1,4 +1,4 @@
-# COUNT 
+# COUNT
 
 The `count` meta-argument is used to create **multiple instances of a resource** without duplicating code blocks.
 
@@ -12,16 +12,16 @@ Hard coding the same resource multiple times is a manual repetition which leads 
 
 ```hcl
 # ❌ INCORRECT (Waste of time)
-resource "aws_s3_bucket" "bucket_1" {
-  bucket = "my-app-data-1" 
+resource "aws_s3_bucket" "bucket-1" {
+  bucket = "my-app-data-1"
 }
 
-resource "aws_s3_bucket" "bucket_2" {
-  bucket = "my-app-data-2" 
+resource "aws_s3_bucket" "bucket-2" {
+  bucket = "my-app-data-2"
 }
 
-resource "aws_s3_bucket" "bucket_3" {
-  bucket = "my-app-data-3" 
+resource "aws_s3_bucket" "bucket-3" {
+  bucket = "my-app-data-3"
 }
 ```
 
@@ -33,12 +33,12 @@ By adding `count` meta-argument, Terraform loops through the block and creates m
 
 ```hcl
 # ✅ CORRECT
-resource "aws_s3_bucket" "multi_bucket" {
+resource "aws_s3_bucket" "multi-bucket" {
   count  = 3
   bucket = "my-app-data-${count.index}"
 
   tags = {
-    Name = "Bucket Number ${count.index}"
+    Name = "my-app-data-${count.index}"
   }
 }
 ```
@@ -48,7 +48,7 @@ resource "aws_s3_bucket" "multi_bucket" {
 ### `count.index`
 
 - `count = 3` tells Terraform to create exactly 3 instances of this resource.
-- `count.index` is a built-in variable available inside `count` meta-argument blocks.
+- `count.index` is a built-in object available within resource blocks that use the count meta-argument.
 - Represents the **index of the current resource** being created (0, 1, 2, ...).
 - Useful for creating unique names, IDs, or references for each instance.
 
@@ -64,7 +64,7 @@ variable "bucket_count" {
   default = 2
 }
 
-resource "aws_s3_bucket" "multi_bucket" {
+resource "aws_s3_bucket" "multi-bucket" {
   count  = var.bucket_count
   bucket = "my-app-data-${count.index}"
 }
@@ -76,8 +76,7 @@ resource "aws_s3_bucket" "multi_bucket" {
 
 When you use `count`, the resource becomes a list. You cannot reference it as a single object anymore.
 
-- To get all bucket ARNs: Use a splat operator `[*]`. 
-
+- To get all bucket ARNs: Use a splat operator `[*]`.
 - To get one specific bucket: Use the index `[0]`.
 
 ```hcl
