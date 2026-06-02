@@ -6,7 +6,7 @@ The provider meta-argument (used inside a resource) allows you to choose which s
 
 ### The Difference: Provider Block vs. Provider Meta-Argument
 
-- **Provider Block**: This is the **global configuration** where you define the region, credentials, and version.
+- **Provider Block**: This is the **global configuration** where you define the region, credentials, etc.
 
 - **Provider Meta-Argument**: This is a line **inside a resource** that says, "Hey, don't use the default setup; use this specific one instead."
 
@@ -16,7 +16,6 @@ The provider meta-argument (used inside a resource) allows you to choose which s
 
 - Deploying to a Different Region.
   - Example: Create a backup S3 bucket in a different region (`us-west-1`) instead of (`us-east-1`).
-  
 - Using different AWS accounts for different resources.
   - Example: Create an S3 bucket in a different AWS account (`prod-account`) instead of (`dev-account`).
 
@@ -51,7 +50,7 @@ resource "aws_s3_bucket" "east_bucket" {
 
 # This bucket goes to us-west-2
 resource "aws_s3_bucket" "west_bucket" {
-  provider = aws.west 
+  provider = aws.west
   bucket   = "my-backup-data"
 }
 ```
