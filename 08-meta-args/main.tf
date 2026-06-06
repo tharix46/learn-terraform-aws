@@ -1,4 +1,4 @@
-# The Trust Policy Document 
+# Trust Policy Document 
 # a data block reads or generates information, but it does not create real infrastructure on AWS by itself
 data "aws_iam_policy_document" "ec2_trust_policy" {
   statement {
@@ -11,37 +11,85 @@ data "aws_iam_policy_document" "ec2_trust_policy" {
   }
 }
 
-# Resource 1: IAM Role
-# This uses the trust policy created above, using a reference to the data block
-resource "aws_iam_role" "app_role" {
-  name               = "app-role"
+# IAM Role
+# This uses the trust policy created above by using a reference to the data block
+resource "aws_iam_role" "test-role" {
+  name               = "${local.name_prefix}_test-role"
   assume_role_policy = data.aws_iam_policy_document.ec2_trust_policy.json
 }
 
 
-# Resource 2: Attach S3 read only access policy to the role (no attribute is referenced by EC2 below)
+# Attach S3 read only access policy to the role (no attribute of this is referenced by EC2 resource below)
 resource "aws_iam_role_policy_attachment" "s3_read_only_access" {
-  role       = aws_iam_role.app_role.name
+  role       = aws_iam_role.test-role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
 
-# Resource 3: Instance Profile
-# This attaches the role to an instance profile which is then attached to the EC2 instance
-resource "aws_iam_instance_profile" "app_profile" {
-  name = "app-profile" 
-  role = aws_iam_role.app_role.name
+# Instance Profile
+# This attaches the role to an instance profile which is then attached to EC2 instances
+resource "aws_iam_instance_profile" "test-instance-profile" {
+  name = "${local.name_prefix}_test-instance-profile"
+  role = aws_iam_role.test-role.name
 }
 
-# Resource 4: EC2 instance that depends on the policy being attached
-resource "aws_instance" "app_server" {
-  ami                  = "ami-0a2b6680ef4ed0596"
-  instance_type        = "t2.micro"
-  iam_instance_profile = aws_iam_instance_profile.app_profile.name
+# EC2 instance that depends on the policy being attached
+resource "aws_instance" "test-server" {
+  ami                         = "ami-0a2b6680ef4ed0596"
+  instance_type               = var.instance_type
+  monitoring                  = var.monitoring
+  associate_public_ip_address = var.associate_public_ip
+  vpc_security_group_ids      = [aws_security_group.test-sg.id]
+  iam_instance_profile        = aws_iam_instance_profile.test-instance-profile.name
+  count                       = var.instance_count
+
+  root_block_device {
+    volume_size = var.root_block_device_size
+    volume_type = var.root_block_device_volume_type
+  }
 
   # Terraform knows about the instance_profile above (implicit dependency),
-  # but it does NOT know the S3 policy must be attached first.
+  # but it does NOT know the S3 policy must be attached before creating EC2 instances.
   # We make that dependency explicit here.
   depends_on = [
     aws_iam_role_policy_attachment.s3_read_only_access
   ]
+
+  tags = {
+    Name = "${local.name_prefix}_test-server-${count.index + 1}"
+  }
+}
+
+# security group for the EC2 instances
+resource "aws_security_group" "test-sg" {
+  name        = "${local.name_prefix}_test-sg"
+  description = "Allow SSH & HTTP inbound traffic and all outbound traffic"
+
+  tags = {
+    Name = "${local.name_prefix}_test-sg"
+  }
+}
+
+# ssh ingress rule for security group
+resource "aws_vpc_security_group_ingress_rule" "allow-ssh" {
+  security_group_id = aws_security_group.test-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = var.allowed_ingress_ports["ssh"]
+  ip_protocol       = "tcp"
+  to_port           = var.allowed_ingress_ports["ssh"]
+}
+
+# http ingress rule for security group
+resource "aws_vpc_security_group_ingress_rule" "allow-http" {
+  security_group_id = aws_security_group.test-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = var.allowed_ingress_ports["http"]
+  ip_protocol       = "tcp"
+  to_port           = var.allowed_ingress_ports["http"]
+}
+
+# all outbound traffic rule for security group
+resource "aws_vpc_security_group_egress_rule" "allow-all" {
+  security_group_id = aws_security_group.test-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
 }
