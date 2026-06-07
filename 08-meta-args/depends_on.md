@@ -54,7 +54,6 @@ resource "aws_iam_role" "app_role" {
   assume_role_policy = data.aws_iam_policy_document.ec2_trust_policy.json
 }
 
-
 # Resource 2: Attach S3 read only access policy to the role (no attribute is referenced by EC2 below)
 resource "aws_iam_role_policy_attachment" "s3_read_only_access" {
   role       = aws_iam_role.app_role.name

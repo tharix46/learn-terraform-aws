@@ -20,3 +20,32 @@ Unlike standard arguments that define specific properties of a resource, meta-ar
 In a real DevOps environment, `prevent_destroy` (within the lifecycle meta-argument) is your best friend for **stateful resources** (where data lives), while `create_before_destroy` (within the lifecycle meta-argument) is essential for **stateless resources** (like web servers).
 
 ---
+
+### What this project (08-meta-args) does?
+
+> The primary goal is to **demonstrate Terraform meta-arguments in practice.**
+
+This project provisions the following AWS resources:
+
+- **IAM Role & Instance Profile**
+- **EC2 instance**
+- **Security group**
+
+State is stored remotely in an **S3 backend** with encryption and locking enabled (`dev.backend.hcl`).
+
+---
+
+### Terraform Commands Used in This Folder
+
+```bash
+tf init -backend-config="dev.backend.hcl"
+tf validate
+tf fmt
+tf plan -var-file="dev.tfvars"
+
+tf apply -auto-approve -var-file="dev.tfvars"
+
+tf destroy -auto-approve -var-file="dev.tfvars"
+```
+
+---
