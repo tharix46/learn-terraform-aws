@@ -18,7 +18,6 @@ resource "aws_iam_role" "test-role" {
   assume_role_policy = data.aws_iam_policy_document.ec2_trust_policy.json
 }
 
-
 # Attach S3 read only access policy to the role (no attribute of this is referenced by EC2 resource below)
 resource "aws_iam_role_policy_attachment" "s3_read_only_access" {
   role       = aws_iam_role.test-role.name
@@ -54,6 +53,10 @@ resource "aws_instance" "test-server" {
     aws_iam_role_policy_attachment.s3_read_only_access
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     Name = "${local.name_prefix}_test-server-${count.index + 1}"
   }
@@ -63,6 +66,10 @@ resource "aws_instance" "test-server" {
 resource "aws_security_group" "test-sg" {
   name        = "${local.name_prefix}_test-sg"
   description = "Allow SSH & HTTP inbound traffic and all outbound traffic"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   tags = {
     Name = "${local.name_prefix}_test-sg"

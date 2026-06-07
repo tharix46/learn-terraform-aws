@@ -7,22 +7,22 @@ output "role_info" {
   }
 }
 
-output "region" {
+output "ec2_instance_region" {
   description = "region of the ec2 instances"
   value       = aws_instance.test-server[*].region
 }
 
-output "environment" {
+output "ec2_instance_environment" {
   description = "environment of the ec2 instances"
   value       = aws_instance.test-server[*].tags_all.Environment
 }
 
-output "instance_count" {
+output "ec2_instance_count" {
   description = "number of ec2 instances to create"
   value       = var.instance_count
 }
 
-output "instance_identifiers" {
+output "ec2_instance_identifiers" {
   description = "IDs and ARNs of the ec2 instances"
   value = {
     id  = aws_instance.test-server[*].id
@@ -30,22 +30,22 @@ output "instance_identifiers" {
   }
 }
 
-output "instance_types" {
+output "ec2_instance_types" {
   description = "types of the ec2 instances"
   value       = aws_instance.test-server[*].instance_type
 }
 
-output "instance_profiles" {
+output "ec2_instance_profiles" {
   description = "instance profiles of the ec2 instances"
   value       = aws_instance.test-server[*].iam_instance_profile
 }
 
-output "instance_public_ip" {
+output "ec2_instance_public_ip" {
   description = "Public IP of the EC2 instances"
   value       = aws_instance.test-server[*].public_ip
 }
 
-output "instance_private_ip" {
+output "ec2_instance_private_ip" {
   description = "Private IP of the EC2 instances"
   value       = aws_instance.test-server[*].private_ip
 }
