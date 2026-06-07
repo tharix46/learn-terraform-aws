@@ -19,7 +19,7 @@ output "ec2_instance_environment" {
 
 output "ec2_instance_count" {
   description = "number of ec2 instances to create"
-  value       = var.instance_count
+  value       = var.ec2_instance_count
 }
 
 output "ec2_instance_identifiers" {
