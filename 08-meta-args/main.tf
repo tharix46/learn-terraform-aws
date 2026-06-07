@@ -69,22 +69,18 @@ resource "aws_security_group" "test-sg" {
   }
 }
 
-# ssh ingress rule for security group
-resource "aws_vpc_security_group_ingress_rule" "allow-ssh" {
+# ingress rules for the security group "test-sg"
+resource "aws_vpc_security_group_ingress_rule" "allow-ingress" {
+  for_each          = var.allowed_ingress_ports
   security_group_id = aws_security_group.test-sg.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = var.allowed_ingress_ports["ssh"]
+  from_port         = each.value
   ip_protocol       = "tcp"
-  to_port           = var.allowed_ingress_ports["ssh"]
-}
+  to_port           = each.value
 
-# http ingress rule for security group
-resource "aws_vpc_security_group_ingress_rule" "allow-http" {
-  security_group_id = aws_security_group.test-sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = var.allowed_ingress_ports["http"]
-  ip_protocol       = "tcp"
-  to_port           = var.allowed_ingress_ports["http"]
+  tags = {
+    Name = "${local.name_prefix}_allow_${each.key}"
+  }
 }
 
 # all outbound traffic rule for security group
