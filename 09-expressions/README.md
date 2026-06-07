@@ -7,6 +7,7 @@ Uses the ternary operator to evaluate a condition and return one of two values.
 ```hcl
 condition ? true_value : false_value
 ```
+
 ```hcl
 resource "aws_instance" "app-server" {
   ami           = "ami-12345678"
@@ -19,7 +20,7 @@ resource "aws_instance" "app-server" {
 
 ### Splat Expressions
 
-Get a list of attributes from a collection of resources (usually created with count).
+Get a list of attributes from a collection of resources (usually created with `count`).
 
 ```hcl
 resource.list[*].attribute
@@ -36,7 +37,7 @@ resource "aws_instance" "app-servers" {
 
 output "private_ips" {
   # returns a list of IPs: ["10.0.1.10", "10.0.2.10", "10.0.3.10"]
-  value = aws_instance.app-servers[*].private_ip 
+  value = aws_instance.app-servers[*].private_ip
 }
 ```
 
@@ -44,7 +45,7 @@ output "private_ips" {
 
 ### Dynamic Blocks
 
-A Dynamic Block acts like a for loop inside a resource block. 
+A Dynamic Block acts like a for loop inside a resource block.
 
 It is used for "nested blocks" (configurations that repeat within a resource, like Security Group rules) to **create multiple nested blocks in one resource block.**
 
@@ -53,7 +54,7 @@ dynamic "block_name" {
   for_each = var.collection_of_values
   content {
     # block configuration
-    # in the content bloc`k, you can access the value using `block_name.value`
+    # in the content block, you can access the value using `block_name.value`
   }
 }
 ```
@@ -82,8 +83,8 @@ resource "aws_security_group" "allow_web" {
 ```
 
 > `for_each` vs `dynamic` block:
-> 
+>
 > - `for_each` loops over resources.
-> - `dynamic` loops over sub-configurations inside a single resource. 
+> - `dynamic` loops over sub-configurations inside a single resource.
 
 ---
