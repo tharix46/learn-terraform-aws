@@ -34,16 +34,16 @@ resource "aws_iam_instance_profile" "test-instance-profile" {
 # EC2 instance that depends on the policy being attached
 resource "aws_instance" "test-server" {
   ami                         = "ami-0a2b6680ef4ed0596"
-  instance_type               = var.instance_type
-  monitoring                  = var.monitoring
-  associate_public_ip_address = var.associate_public_ip
+  instance_type               = var.ec2_instance_types[var.environment]
+  monitoring                  = var.ec2_monitoring
+  associate_public_ip_address = var.ec2_associate_public_ip
   vpc_security_group_ids      = [aws_security_group.test-sg.id]
   iam_instance_profile        = aws_iam_instance_profile.test-instance-profile.name
-  count                       = var.instance_count
+  count                       = var.ec2_instance_count
 
   root_block_device {
-    volume_size = var.root_block_device_size
-    volume_type = var.root_block_device_volume_type
+    volume_size = var.ec2_root_block_device_size
+    volume_type = var.ec2_root_block_device_volume_type
   }
 
   # Terraform knows about the instance_profile above (implicit dependency),
@@ -78,7 +78,7 @@ resource "aws_security_group" "test-sg" {
 
 # ingress rules for the security group "test-sg"
 resource "aws_vpc_security_group_ingress_rule" "allow-ingress" {
-  for_each          = var.allowed_ingress_ports
+  for_each          = var.sg_allowed_ingress_ports
   security_group_id = aws_security_group.test-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = each.value
