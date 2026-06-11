@@ -8,6 +8,11 @@ variable "environment" {
   description = "environment name"
   type        = string
   default     = "dev"
+
+  validation {
+    condition     = contains(["dev", "staging", "prod"], var.environment)
+    error_message = "The environment tier must be exactly 'dev', 'staging', or 'prod'."
+  }
 }
 
 variable "project" {
