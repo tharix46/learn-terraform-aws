@@ -3,7 +3,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = var.project
+      Project     = local.formatted_project_name
       CreatedBy   = "Tharindu Lakshan"
       ManagedBy   = "Terraform"
       Environment = var.environment
