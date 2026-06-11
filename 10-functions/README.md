@@ -8,14 +8,29 @@ You can only use the ones provided by Terraform.
 
 ### Different Types of Functions
 
-- String functions
-- Numeric functions
-- Collection functions
-- Encoding functions
-- Date and time functions
-- Filesystem functions
-- IP network functions
-- Type conversion functions
+- String functions:
+  `lower(), upper(), replace(), substr(), trim(), split(), join(), chomp()`
+
+- Numeric functions:
+  `min(), max(), abs(), floor(), ceil(), round()`
+
+- Collection functions:
+  `length(), contains(), keys(), values(), merge(), lookup(), distinct(), sort()`
+
+- Encoding functions:
+  `base64decode(), base64encode(), jsondecode(), jsonencode()`
+
+- Date and time functions:
+  `timestamp(), formatdate(), timeadd()`
+
+- Filesystem functions:
+  `file(), templatefile(), fileexists(), filebase64()`
+
+- IP network functions:
+  `cidrsubnet(), cidrsubnets(), cidrhost()`
+
+- Type conversion functions:
+  `tostring(), tonumber(), toset(), tolist(), tomap()`
 
 ---
 
@@ -49,6 +64,7 @@ tonumber("20") # -> 20
 tostring(20) # -> "20"
 
 cidrsubnet("10.0.0.0/16", 8, 1) # -> "10.0.1.0/24"
+cidrsubnets("10.0.0.0/16", 2, 2, 8, 8, 12, 12) # -> "10.0.0.0/18", "10.0.64.0/18", "10.0.128.0/24", "10.0.129.0/24", "10.0.130.0/28", "10.0.130.16.0/28"
 cidrhost("10.0.16.0/20", 4000) # -> "10.0.31.160"
 
 timestamp() # -> "2026-06-10T07:02:27Z"
