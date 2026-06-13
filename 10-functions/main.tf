@@ -40,6 +40,7 @@ resource "aws_instance" "test-server" {
   vpc_security_group_ids      = [aws_security_group.test-sg.id]
   iam_instance_profile        = aws_iam_instance_profile.test-instance-profile.name
   count                       = var.ec2_instance_count
+  availability_zone           = element(var.allowed_availability_zones, count.index)
 
   root_block_device {
     volume_size = var.ec2_root_block_device_size

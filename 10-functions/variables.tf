@@ -77,6 +77,17 @@ variable "ec2_user_data_script_path" {
   }
 }
 
+variable "allowed_availability_zones" {
+  type        = list(string)
+  description = "list of allowed availability zones for ec2 instances"
+  default     = ["us-east-1a", "us-east-1b"]
+
+  validation {
+    condition     = alltrue([for az in var.allowed_availability_zones : startswith(az, "us-east-1")])
+    error_message = "All availability zones must be in us-east-1 region."
+  }
+}
+
 variable "sg_allowed_ingress_ports" {
   description = "map of service name to port number"
   type        = map(number)
