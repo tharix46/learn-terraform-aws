@@ -13,6 +13,7 @@ ec2_root_block_device_size        = 8
 ec2_root_block_device_volume_type = "gp3"
 ec2_monitoring                    = false
 ec2_associate_public_ip           = true
+ec2_user_data_script_path         = "userdata.sh"
 
 sg_allowed_ingress_ports = {
   ssh  = 22

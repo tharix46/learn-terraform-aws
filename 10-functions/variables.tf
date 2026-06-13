@@ -66,6 +66,17 @@ variable "ec2_associate_public_ip" {
   default     = true
 }
 
+variable "ec2_user_data_script_path" {
+  description = "path to userdata script relative to the module root"
+  type        = string
+  default     = "userdata.sh"
+
+  validation {
+    condition     = fileexists("${path.module}/${var.ec2_user_data_script_path}")
+    error_message = "Userdata script not found."
+  }
+}
+
 variable "sg_allowed_ingress_ports" {
   description = "map of service name to port number"
   type        = map(number)
