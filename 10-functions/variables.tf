@@ -29,6 +29,11 @@ variable "ec2_instance_types" {
     staging = "t3.micro"
     prod    = "t3.large"
   }
+
+  validation {
+    condition     = alltrue([for type in values(var.ec2_instance_types) : can(regex("^t3\\.", type))])
+    error_message = "All EC2 instance types must be in the t3 family (e.g. t3.micro, t3.small)."
+  }
 }
 
 variable "ec2_instance_count" {
