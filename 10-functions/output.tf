@@ -50,6 +50,11 @@ output "ec2_instance_private_ip" {
   value       = aws_instance.test-server[*].private_ip
 }
 
+output "ec2_instance_availability_zone" {
+  description = "Availability zones of the EC2 instances"
+  value       = aws_instance.test-server[*].availability_zone
+}
+
 output "ec2_root_volume_sizes" {
   description = "Size and type of the root block device"
   value = {
