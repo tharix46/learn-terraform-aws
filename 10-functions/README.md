@@ -73,3 +73,46 @@ formatdate("YYYY-MM-DD", timestamp()) # -> "2026-06-10"
 ```
 
 ---
+
+### What This Project (10-functions) Does?
+
+> The primary goal is to **demonstrate Terraform functions in practice.**
+
+This project provisions the following AWS resources:
+
+- **IAM Role & Instance Profile** (with S3 read-only policy attached)
+- **EC2 instances** (deployed across multiple availability zones)
+- **Security group** (with configurable ingress/egress rules)
+
+State is stored remotely in an **S3 backend** with encryption and locking enabled (`dev.backend.hcl`).
+
+This project demonstrates the usage of different functions such as:
+
+- element()
+- file()
+- lower()
+- replace()
+- contains()
+- alltrue()
+- values()
+- can()
+- regex()
+- fileexists()
+- startswith()
+
+---
+
+### Terraform Commands Used in This Project
+
+```bash
+tf init -backend-config="dev.backend.hcl"
+tf validate
+tf fmt
+tf plan -var-file="dev.tfvars"
+
+tf apply -auto-approve -var-file="dev.tfvars"
+
+tf destroy -auto-approve -var-file="dev.tfvars"
+```
+
+---
