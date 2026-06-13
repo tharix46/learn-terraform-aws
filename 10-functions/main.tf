@@ -46,6 +46,8 @@ resource "aws_instance" "test-server" {
     volume_type = var.ec2_root_block_device_volume_type
   }
 
+  user_data = file("${path.module}/userdata.sh")
+
   # Terraform knows about the instance_profile above (implicit dependency),
   # but it does NOT know the S3 policy must be attached before creating EC2 instances.
   # We make that dependency explicit here.
