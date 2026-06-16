@@ -72,7 +72,7 @@ terraform {
 
 - When you run `terraform init`, Terraform downloads the provider plugin that matches the version constraint you specified.
 - Terraform stores the downloaded provider plugin under `.terraform/providers/`.
-- If your installed Terraform doesn’t match required_version → error
+- If your installed Terraform version doesn’t match required_version → error
 - If existing provider version doesn’t match → Terraform fetches the correct one from registry
 
 > Terraform locks these versions in `.terraform.lock.hcl`.
@@ -100,9 +100,9 @@ terraform providers lock --platform=linux_amd64
 
 ### Global Plugin Cache
 
-This is **NOT ENABLED BY DEFAULT**. 
+This is **NOT ENABLED BY DEFAULT**.
 
-When enabled, Terraform downloads provider plugins to a shared directory under your home folder (`~/.terraform.d/plugin-cache`) instead of inside each project's `.terraform/` folder. 
+When enabled, Terraform downloads provider plugins to a shared directory under your home folder (`~/.terraform.d/plugin-cache`) instead of inside each project's `.terraform/` folder.
 
 This means multiple projects can reuse the same cached provider binary rather than each project downloading its own copy — saving bandwidth and disk space.
 
