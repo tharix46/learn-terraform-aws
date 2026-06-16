@@ -31,9 +31,26 @@ resource "aws_iam_instance_profile" "test-instance-profile" {
   role = aws_iam_role.test-role.name
 }
 
+# data block to get the latest ubuntu AMI ID
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-resolute-26.04-amd64-server-*"]
+  }
+}
+
+# data block to get existing key pair
+data "aws_key_pair" "existing" {
+  key_name           = "test-key-pair"
+  include_public_key = true
+}
+
 # EC2 instance that depends on the policy being attached
 resource "aws_instance" "test-server" {
-  ami                         = "ami-0a2b6680ef4ed0596"
+  ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.ec2_instance_types[var.environment]
   monitoring                  = var.ec2_monitoring
   associate_public_ip_address = var.ec2_associate_public_ip
@@ -41,6 +58,7 @@ resource "aws_instance" "test-server" {
   iam_instance_profile        = aws_iam_instance_profile.test-instance-profile.name
   count                       = var.ec2_instance_count
   availability_zone           = element(var.allowed_availability_zones, count.index)
+  key_name                    = data.aws_key_pair.existing.key_name
 
   root_block_device {
     volume_size = var.ec2_root_block_device_size
@@ -55,6 +73,7 @@ resource "aws_instance" "test-server" {
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [ami]
   }
 
   tags = {
