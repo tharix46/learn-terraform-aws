@@ -19,7 +19,7 @@ output "ec2_instance_environment" {
 
 output "ec2_instance_count" {
   description = "number of ec2 instances to create"
-  value       = var.ec2_instance_count
+  value       = length(aws_instance.test-server)
 }
 
 output "ec2_instance_identifiers" {
@@ -60,6 +60,25 @@ output "ec2_root_volume_sizes" {
   value = {
     size = aws_instance.test-server[*].root_block_device[0].volume_size
     type = aws_instance.test-server[*].root_block_device[0].volume_type
+  }
+}
+
+output "key_pair_info" {
+  description = "details of the existing key pair"
+  value = {
+    id          = data.aws_key_pair.existing.id
+    name        = data.aws_key_pair.existing.key_name
+    fingerprint = data.aws_key_pair.existing.fingerprint
+    public_key  = data.aws_key_pair.existing.public_key
+  }
+}
+
+output "ami_info" {
+  description = "details of the ubuntu AMI being used"
+  value = {
+    id          = data.aws_ami.ubuntu.id
+    name        = data.aws_ami.ubuntu.name
+    description = data.aws_ami.ubuntu.description
   }
 }
 
