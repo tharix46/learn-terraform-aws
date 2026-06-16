@@ -18,7 +18,7 @@ variable "environment" {
 variable "project" {
   description = "project name"
   type        = string
-  default     = "tf-meta-args-demo"
+  default     = "tf-functions-demo"
 }
 
 variable "ec2_instance_types" {

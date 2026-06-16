@@ -1,6 +1,6 @@
 region      = "us-east-1"
 environment = "dev"
-project     = "TF Meta Args Demo"
+project     = "TF Functions Demo"
 
 ec2_instance_types = {
   dev     = "t3.micro"
