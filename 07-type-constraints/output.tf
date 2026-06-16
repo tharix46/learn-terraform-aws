@@ -36,7 +36,7 @@ output "instance_private_ip" {
   value       = aws_instance.test-server[*].private_ip
 }
 
-output "ec2_root_volume_sizes" {
+output "ec2_root_volume_info" {
   description = "Size and type of the root block device"
   value = {
     size = aws_instance.test-server[*].root_block_device[0].volume_size

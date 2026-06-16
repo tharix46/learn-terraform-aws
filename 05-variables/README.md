@@ -2,7 +2,7 @@
 
 ### Why Variables?
 
-Hardcoding values (like an AWS Region, Instance ID, etc.) directly into your .tf files makes your code rigid, non-reusable, and dangerous.
+Hardcoding values (like an AWS Region, environment name, etc.) directly into your .tf files makes your code rigid, non-reusable, and dangerous.
 
 ---
 
@@ -30,13 +30,13 @@ You define **variables** in a **variables.tf** file. This tells Terraform to exp
 variable "environment" {
   description = "environment name"
   type        = string
-  default     = "dev"   
+  default     = "dev"
 }
 
 variable "bucket_name" {
   description = "s3 bucket name"
   type        = string
-  default     = "tf-demo-bucket-982739"   
+  default     = "tf-demo-bucket-982739"
 }
 
 # reference with 'var.' prefix in main.tf
@@ -55,6 +55,7 @@ resource "aws_s3_bucket" "demo-s3-bucket" {
 ### How to Pass Values to Input Variables
 
 1. Command line arguments (`-var` and `-var-file`)
+
 ```bash
 # using -var
 tf plan -var="environment=staging" -var="bucket_name=tf-demo-bucket"
@@ -65,6 +66,7 @@ tf plan -var-file="prod.tfvars"
 ```
 
 2. Variable files (`.tfvars`)
+
 ```hcl
 # in terraform.tfvars
 environment = "staging"
@@ -72,6 +74,7 @@ bucket_name = "tf-demo-bucket"
 ```
 
 3. Environment variables (`TF_VAR_` prefix)
+
 ```bash
 export TF_VAR_environment="staging"
 export TF_VAR_bucket_name="tf-demo-bucket"
@@ -85,7 +88,7 @@ terraform plan
 
 ### 2. Output Variables (outputs.tf)
 
-Values you want to output from Terraform - like function return values. 
+Values you want to output from Terraform - like function return values.
 
 They **display** important information **after Terraform creates your infrastructure**.
 
@@ -113,17 +116,17 @@ output "environment" {
   value       = var.environment
 }
 ```
+
 ```bash
 # after running terraform apply, you can view outputs
-
 # show all outputs
-tf output                    
+tf output
 
 # show specific output
-tf output bucket_name        
+tf output bucket_name
 
 # show all outputs in JSON format
-tf output -json              
+tf output -json
 ```
 
 ---
@@ -171,7 +174,6 @@ tf apply --auto-approve
 tf output
 
 tf providers lock --platform=linux_amd64
-
 
 tf destroy --auto-approve
 ```
