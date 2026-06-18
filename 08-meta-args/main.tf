@@ -64,7 +64,7 @@ resource "aws_instance" "test-server" {
 
 # security group for the EC2 instances
 resource "aws_security_group" "test-sg" {
-  name        = "${local.name_prefix}_test-sg"
+  name_prefix = "${local.name_prefix}_test-sg"
   description = "Allow SSH & HTTP inbound traffic and all outbound traffic"
 
   lifecycle {
