@@ -12,7 +12,7 @@ They are strictly for fetching data; they cannot create, update, or destroy infr
 
 This project provisions the following AWS resources:
 
-- **IAM Role & Instance Profile**
+- **IAM Role & Instance Profile** (uses data source for trust policy document)
 - **EC2 instances** (uses data sources for `aws_ami` and `aws_key_pair`)
 - **Security group**
 
