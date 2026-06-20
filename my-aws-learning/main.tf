@@ -9,7 +9,7 @@ resource "aws_iam_group" "cli-group" {
 }
 
 # iam user group membership
-resource "aws_iam_user_group_membership" "cli-user-group-membership" {
+resource "aws_iam_user_group_membership" "cli-group-membership" {
   user   = aws_iam_user.cli-user.name
   groups = [aws_iam_group.cli-group.name]
 }
