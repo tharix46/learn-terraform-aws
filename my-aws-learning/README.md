@@ -7,6 +7,9 @@ tf fmt
 tf plan -var-file="dev.tfvars"
 tf apply -var-file="dev.tfvars" -auto-approve
 
+# brew install graphviz
+tf graph | dot -Tsvg > graph.svg
+
 tf providers lock --platform=linux_amd64
 ```
 
