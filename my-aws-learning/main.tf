@@ -14,8 +14,8 @@ resource "aws_iam_user_group_membership" "devs-group-membership" {
   groups = [aws_iam_group.devs-group.name]
 }
 
-# iam policy document DATA SOURCE for s3 read only access
-data "aws_iam_policy_document" "s3-read-only" {
+# iam policy document DATA SOURCE for ec2 s3 access
+data "aws_iam_policy_document" "ec2-s3-access" {
   statement {
     sid    = "S3ReadOnly"
     effect = "Allow"
@@ -25,10 +25,21 @@ data "aws_iam_policy_document" "s3-read-only" {
       "s3:GetObject",
     ]
 
+    # TODO: change bucket name correctly when create bucket in s3 section
     resources = [
       "arn:aws:s3:::*",
       "arn:aws:s3:::*/*",
     ]
+  }
+
+  statement {
+    sid = "WriteToLogs"
+
+    effect = "Allow"
+    
+    actions = ["s3:PutObject"]
+    # TODO: change bucket name correctly when create bucket in s3 section. add path LOGS
+    resources = ["arn:aws:s3:::*/logs/*"]
   }
 }
 
@@ -37,7 +48,7 @@ resource "aws_iam_policy" "s3-read-only" {
   name        = "s3-read-only"
   description = "read only access to s3 buckets"
 
-  policy = data.aws_iam_policy_document.s3-read-only.json
+  policy = data.aws_iam_policy_document.ec2-s3-access.json
 }
 
 # iam group policy attachment
