@@ -1,17 +1,17 @@
 # iam user
-resource "aws_iam_user" "cli-user" {
-  name = "cli-user"
+resource "aws_iam_user" "dev-user" {
+  name = var.iam_user_name
 }
 
 # iam group
-resource "aws_iam_group" "cli-group" {
-  name = "cli-group"
+resource "aws_iam_group" "devs-group" {
+  name = var.iam_group_name
 }
 
 # iam user group membership
-resource "aws_iam_user_group_membership" "cli-group-membership" {
-  user   = aws_iam_user.cli-user.name
-  groups = [aws_iam_group.cli-group.name]
+resource "aws_iam_user_group_membership" "devs-group-membership" {
+  user   = aws_iam_user.dev-user.name
+  groups = [aws_iam_group.devs-group.name]
 }
 
 # iam policy document DATA SOURCE for s3 read only access
@@ -41,7 +41,7 @@ resource "aws_iam_policy" "s3-read-only" {
 }
 
 # iam group policy attachment
-resource "aws_iam_group_policy_attachment" "cli-group-s3-read-only" {
-  group      = aws_iam_group.cli-group.name
+resource "aws_iam_group_policy_attachment" "devs-group-s3-read-only" {
+  group      = aws_iam_group.devs-group.name
   policy_arn = aws_iam_policy.s3-read-only.arn
 }
