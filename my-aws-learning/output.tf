@@ -17,6 +17,15 @@ output "iam_group_info" {
   }
 }
 
+output "devs_read_only_policy_info" {
+  description = "details of the devs read only policy"
+  value = {
+    arn              = aws_iam_policy.devs-read-only.arn
+    policy_id        = aws_iam_policy.devs-read-only.policy_id
+    attachment_count = aws_iam_policy.devs-read-only.attachment_count
+  }
+}
+
 output "ec2_s3_access_role_info" {
   description = "details of the ec2-s3-access role"
   value = {
