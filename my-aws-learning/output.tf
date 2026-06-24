@@ -17,12 +17,30 @@ output "iam_group_info" {
   }
 }
 
-output "iam_s3_read_only_policy_info" {
-  description = "details of the s3-read-only policy"
+output "ec2_s3_access_role_info" {
+  description = "details of the ec2-s3-access role"
   value = {
-    name        = aws_iam_policy.s3-read-only.name
-    arn         = aws_iam_policy.s3-read-only.arn
-    description = aws_iam_policy.s3-read-only.description
+    id          = aws_iam_role.ec2-s3-access.id
+    arn         = aws_iam_role.ec2-s3-access.arn
+    create_date = aws_iam_role.ec2-s3-access.create_date
+  }
+}
+
+output "ec2_s3_access_instance_profile_info" {
+  description = "details of the ec2-s3-access instance profile"
+  value = {
+    id          = aws_iam_instance_profile.ec2-s3-instance-profile.id
+    arn         = aws_iam_instance_profile.ec2-s3-instance-profile.arn
+    create_date = aws_iam_instance_profile.ec2-s3-instance-profile.create_date
+  }
+}
+
+output "ec2_s3_access_policy_info" {
+  description = "details of the ec2-s3-access policy"
+  value = {
+    arn              = aws_iam_policy.ec2-s3-access.arn
+    policy_id        = aws_iam_policy.ec2-s3-access.policy_id
+    attachment_count = aws_iam_policy.ec2-s3-access.attachment_count
   }
 }
 
