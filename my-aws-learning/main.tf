@@ -14,6 +14,40 @@ resource "aws_iam_user_group_membership" "devs-group-membership" {
   groups = [aws_iam_group.devs-group.name]
 }
 
+# iam policy document defining ec2 & s3 read-only access
+data "aws_iam_policy_document" "devs-read-only" {
+  statement {
+    sid       = "EC2ReadOnly"
+    effect    = "Allow"
+    actions   = ["ec2:Describe*"]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "S3ReadOnly"
+    effect = "Allow"
+    actions = [
+      "s3:ListBucket",
+      "s3:GetObject",
+    ]
+    # TODO: change bucket name correctly when create bucket in s3 section
+    resources = ["*"]
+  }
+}
+
+# iam policy for devs group read-only access
+resource "aws_iam_policy" "devs-read-only" {
+  name        = "devs-read-only"
+  description = "read-only access to ec2 and s3 for debugging"
+  policy      = data.aws_iam_policy_document.devs-read-only.json
+}
+
+# attach read-only policy to the devs group
+resource "aws_iam_group_policy_attachment" "devs-read-only-attach" {
+  group      = aws_iam_group.devs-group.name
+  policy_arn = aws_iam_policy.devs-read-only.arn
+}
+
 # iam policy document for ec2 -> s3 access
 data "aws_iam_policy_document" "ec2-s3-access" {
   statement {
@@ -80,5 +114,3 @@ resource "aws_iam_instance_profile" "ec2-s3-instance-profile" {
   name = "ec2-s3-instance-profile"
   role = aws_iam_role.ec2-s3-access.name
 }
-
-# TODO: policies for devs group to read only for ec2, s3
