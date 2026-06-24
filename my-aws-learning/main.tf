@@ -100,6 +100,10 @@ data "aws_iam_policy_document" "ec2-trust-policy" {
 resource "aws_iam_role" "ec2-s3-access" {
   name_prefix        = "${local.name_prefix}_ec2-s3-access"
   assume_role_policy = data.aws_iam_policy_document.ec2-trust-policy.json
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 # iam role policy attachment for ec2 -> s3 access
@@ -112,4 +116,8 @@ resource "aws_iam_role_policy_attachment" "ec2-s3-access" {
 resource "aws_iam_instance_profile" "ec2-s3-instance-profile" {
   name = "${local.name_prefix}_ec2-s3-instance-profile"
   role = aws_iam_role.ec2-s3-access.name
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
