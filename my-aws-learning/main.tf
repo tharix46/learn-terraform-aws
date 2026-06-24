@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "devs-read-only" {
 
 # iam policy for devs group read-only access
 resource "aws_iam_policy" "devs-read-only" {
-  name        = "devs-read-only"
+  name        = "${local.name_prefix}_devs-read-only"
   description = "read-only access to ec2 and s3 for debugging"
   policy      = data.aws_iam_policy_document.devs-read-only.json
 }
@@ -79,10 +79,9 @@ data "aws_iam_policy_document" "ec2-s3-access" {
 
 # iam policy for ec2 -> s3 access
 resource "aws_iam_policy" "ec2-s3-access" {
-  name        = "ec2-s3-access"
+  name        = "${local.name_prefix}_ec2-s3-access"
   description = "read access to s3 bucket and write access to logs folder"
-
-  policy = data.aws_iam_policy_document.ec2-s3-access.json
+  policy      = data.aws_iam_policy_document.ec2-s3-access.json
 }
 
 # trust policy document for ec2-s3-access role to trust ec2
@@ -99,7 +98,7 @@ data "aws_iam_policy_document" "ec2-trust-policy" {
 
 # iam role for ec2 -> s3 access
 resource "aws_iam_role" "ec2-s3-access" {
-  name               = "ec2-s3-access"
+  name_prefix        = "${local.name_prefix}_ec2-s3-access"
   assume_role_policy = data.aws_iam_policy_document.ec2-trust-policy.json
 }
 
@@ -111,6 +110,6 @@ resource "aws_iam_role_policy_attachment" "ec2-s3-access" {
 
 # iam instance profile for ec2 -> s3 access
 resource "aws_iam_instance_profile" "ec2-s3-instance-profile" {
-  name = "ec2-s3-instance-profile"
+  name = "${local.name_prefix}_ec2-s3-instance-profile"
   role = aws_iam_role.ec2-s3-access.name
 }
