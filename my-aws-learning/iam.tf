@@ -68,7 +68,6 @@ data "aws_iam_policy_document" "ec2-s3-access" {
 
   statement {
     sid = "WriteToLogs"
-
     effect = "Allow"
 
     actions = ["s3:PutObject"]
