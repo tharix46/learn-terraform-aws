@@ -55,14 +55,23 @@ output "ec2_s3_access_instance_profile_info" {
 }
 
 # vpc outputs
+output "default_vpc_info" {
+  description = "details of the default VPC"
+  value = {
+    id         = data.aws_vpc.default-vpc.id
+    arn        = data.aws_vpc.default-vpc.arn
+    cidr_block = data.aws_vpc.default-vpc.cidr_block
+  }
+}
+
 output "dev_vpc_info" {
   description = "details of the dev-vpc"
   value = {
-    id   = aws_vpc.dev-vpc.id
-    arn  = aws_vpc.dev-vpc.arn
-    name = aws_vpc.dev-vpc.tags_all["Name"]
-    cidr_block= aws_vpc.dev-vpc.cidr_block
-    region= aws_vpc.dev-vpc.region
+    id         = aws_vpc.dev-vpc.id
+    arn        = aws_vpc.dev-vpc.arn
+    name       = aws_vpc.dev-vpc.tags_all["Name"]
+    cidr_block = aws_vpc.dev-vpc.cidr_block
+    region     = aws_vpc.dev-vpc.region
   }
-}  
+}
   

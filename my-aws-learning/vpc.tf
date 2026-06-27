@@ -1,3 +1,8 @@
+# default vpc
+data "aws_vpc" "default-vpc" {
+  default = true
+}
+
 # vpc
 resource "aws_vpc" "dev-vpc" {
   cidr_block       = "10.0.0.0/16"
