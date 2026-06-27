@@ -1,3 +1,4 @@
+# iam outputs
 output "iam_user_info" {
   description = "details of the iam user"
   value = {
@@ -52,3 +53,16 @@ output "ec2_s3_access_instance_profile_info" {
     create_date = aws_iam_instance_profile.ec2-s3-instance-profile.create_date
   }
 }
+
+# vpc outputs
+output "dev_vpc_info" {
+  description = "details of the dev-vpc"
+  value = {
+    id   = aws_vpc.dev-vpc.id
+    arn  = aws_vpc.dev-vpc.arn
+    name = aws_vpc.dev-vpc.tags_all["Name"]
+    cidr_block= aws_vpc.dev-vpc.cidr_block
+    region= aws_vpc.dev-vpc.region
+  }
+}  
+  
