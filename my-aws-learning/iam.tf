@@ -43,7 +43,7 @@ resource "aws_iam_policy" "devs-read-only" {
 }
 
 # attach read-only policy to the devs group
-resource "aws_iam_group_policy_attachment" "devs-read-only-attach" {
+resource "aws_iam_group_policy_attachment" "devs-read-only" {
   group      = aws_iam_group.devs-group.name
   policy_arn = aws_iam_policy.devs-read-only.arn
 }
@@ -67,7 +67,7 @@ data "aws_iam_policy_document" "ec2-s3-access" {
   }
 
   statement {
-    sid = "WriteToLogs"
+    sid    = "WriteToLogs"
     effect = "Allow"
 
     actions = ["s3:PutObject"]
@@ -112,8 +112,8 @@ resource "aws_iam_role_policy_attachment" "ec2-s3-access" {
 }
 
 # iam instance profile for ec2 -> s3 access
-resource "aws_iam_instance_profile" "ec2-s3-instance-profile" {
-  name = "${local.name_prefix}_ec2-s3-instance-profile"
+resource "aws_iam_instance_profile" "ec2-s3-access" {
+  name = "${local.name_prefix}_ec2-s3-access"
   role = aws_iam_role.ec2-s3-access.name
 
   lifecycle {
