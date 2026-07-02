@@ -13,24 +13,15 @@ resource "aws_vpc" "dev-vpc" {
   }
 }
 
-resource "aws_subnet" "public-subnet-1" {
+# public subnets
+resource "aws_subnet" "public-subnets" {
+  count = 2
   vpc_id                  = aws_vpc.dev-vpc.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  cidr_block              = "10.0.${count.index + 1}.0/24"
+  availability_zone       = element(var.allowed_availability_zones, count.index)
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${local.name_prefix}_public-subnet-1"
-  }
-}
-
-resource "aws_subnet" "public-subnet-2" {
-  vpc_id                  = aws_vpc.dev-vpc.id
-  cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1b"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "${local.name_prefix}_public-subnet-2"
+    Name = "${local.name_prefix}_public-subnet-${count.index + 1}"
   }
 }

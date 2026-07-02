@@ -16,6 +16,12 @@ variable "region" {
   default     = "us-east-1"
 }
 
+variable "allowed_availability_zones" {
+  description = "list of allowed availability zones"
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b"]
+}
+
 variable "iam_user_name" {
   description = "iam user name"
   type        = string
