@@ -48,9 +48,9 @@ output "ec2_s3_access_role_info" {
 output "ec2_s3_access_instance_profile_info" {
   description = "details of the ec2-s3-access instance profile"
   value = {
-    id          = aws_iam_instance_profile.ec2-s3-instance-profile.id
-    arn         = aws_iam_instance_profile.ec2-s3-instance-profile.arn
-    create_date = aws_iam_instance_profile.ec2-s3-instance-profile.create_date
+    id          = aws_iam_instance_profile.ec2-s3-access.id
+    arn         = aws_iam_instance_profile.ec2-s3-access.arn
+    create_date = aws_iam_instance_profile.ec2-s3-access.create_date
   }
 }
 
