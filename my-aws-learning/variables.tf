@@ -10,6 +10,12 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "region" {
+  description = "region name"
+  type        = string
+  default     = "us-east-1"
+}
+
 variable "iam_user_name" {
   description = "iam user name"
   type        = string
