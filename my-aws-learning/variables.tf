@@ -49,3 +49,12 @@ variable "public_subnet_configs" {
     "us-east-1b" = 2
   }
 }
+
+variable "private_subnet_configs" {
+  description = "allowed AZs and associate a number with it for private subnet cidr creation"
+  type        = map(number)
+  default = {
+    "us-east-1a" = 1
+    "us-east-1b" = 2
+  }
+}

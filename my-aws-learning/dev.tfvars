@@ -9,3 +9,7 @@ public_subnet_configs = {
   "us-east-1a" = 1
   "us-east-1b" = 2
 }
+private_subnet_configs = {
+  "us-east-1a" = 1  
+  "us-east-1b" = 2
+}
