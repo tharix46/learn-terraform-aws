@@ -40,3 +40,12 @@ variable "vpc_cidr_block" {
   type        = string
   default     = "10.0.0.0/16"
 }
+
+variable "public_subnet_configs" {
+  description = "allowed AZs and associate a number with it for public subnet cidr creation"
+  type        = map(number)
+  default = {
+    "us-east-1a" = 1
+    "us-east-1b" = 2
+  }
+}
