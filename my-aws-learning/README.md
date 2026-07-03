@@ -41,4 +41,12 @@ aws ec2 describe-subnets \
   --filter "Name=vpc-id, Values=vpc-0c462469acfaa2a51" \
   --query "Subnets[*].[SubnetId, Tags[?Key=='Name'].Value | [0], State, CidrBlock, AvailabilityZone]" \
   --output table
+
+# list private subnets
+aws ec2 describe-subnets \
+  --filter "Name=vpc-id, Values=vpc-0c462469acfaa2a51" \
+  --filter "Name=map-public-ip-on-launch, Values=false" \
+  --query "Subnets[*].[SubnetId, Tags[?Key=='Name'].Value | [0], State, CidrBlock, AvailabilityZone]" \
+  --output table
+
 ```
