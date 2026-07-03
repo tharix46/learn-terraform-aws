@@ -15,13 +15,13 @@ resource "aws_vpc" "dev-vpc" {
 
 # public subnets
 resource "aws_subnet" "public-subnets" {
-  count                   = 2
+  for_each                = var.public_subnet_configs
   vpc_id                  = aws_vpc.dev-vpc.id
-  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, count.index + 1)
-  availability_zone       = element(var.allowed_availability_zones, count.index)
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, each.value)
+  availability_zone       = each.key
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${local.name_prefix}_public-subnet-${count.index + 1}"
+    Name = "${local.name_prefix}_public-subnet-${each.key}"
   }
 }
