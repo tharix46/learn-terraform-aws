@@ -42,9 +42,9 @@ resource "aws_subnet" "private-subnets" {
   availability_zone       = each.value.az
   map_public_ip_on_launch = false
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 
   tags = {
     Name = "${local.name_prefix}_private-subnet-${each.key}"
