@@ -42,16 +42,20 @@ variable "vpc_cidr_block" {
 }
 
 variable "public_subnet_configs" {
-  description = "allowed AZs and associate a number with it for public subnet cidr creation"
-  type        = map(number)
+  description = "AZ, new bits and subnet number to create public subnets"
+  type = map(object({
+    az       = string
+    new_bits = number
+    net_num  = number
+  }))
   default = {
-    "us-east-1a" = 1
-    "us-east-1b" = 2
+    "us-east-1a" = { az = "us-east-1a", new_bits = 8, net_num = 1 }
+    "us-east-1b" = { az = "us-east-1b", new_bits = 8, net_num = 2 }
   }
 }
 
 variable "private_subnet_configs" {
-  description = "allowed AZs and associate a number with it for private subnet cidr creation"
+  description = "AZ, new bits and subnet number to create private subnets"
   type = map(object({
     az       = string
     new_bits = number
