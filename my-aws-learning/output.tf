@@ -74,4 +74,17 @@ output "dev_vpc_info" {
     region     = aws_vpc.dev-vpc.region
   }
 }
+
+output "public_subnet_info" {
+  description = "details of the public subnets"
+  value = {
+    for k, v in aws_subnet.public-subnets : k => {
+      id                = v.id
+      arn               = v.arn
+      name              = v.tags_all["Name"]
+      cidr_block        = v.cidr_block
+      availability_zone = v.availability_zone
+    }
+  }
+}
   
