@@ -10,6 +10,8 @@ public_subnet_configs = {
   "us-east-1b" = 2
 }
 private_subnet_configs = {
-  "us-east-1a" = 1  
-  "us-east-1b" = 2
+  "app-us-east-1a" = { az = "us-east-1a", new_bits = 4, net_num = 1 }
+  "app-us-east-1b" = { az = "us-east-1b", new_bits = 4, net_num = 2 }
+  "db-us-east-1a"  = { az = "us-east-1a", new_bits = 4, net_num = 3 }
+  "db-us-east-1b"  = { az = "us-east-1b", new_bits = 4, net_num = 4 }
 }
