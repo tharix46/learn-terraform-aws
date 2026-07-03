@@ -52,9 +52,15 @@ variable "public_subnet_configs" {
 
 variable "private_subnet_configs" {
   description = "allowed AZs and associate a number with it for private subnet cidr creation"
-  type        = map(number)
+  type = map(object({
+    az       = string
+    new_bits = number
+    net_num  = number
+  }))
   default = {
-    "us-east-1a" = 1
-    "us-east-1b" = 2
+    "app-us-east-1a" = { az = "us-east-1a", new_bits = 4, net_num = 1 }
+    "app-us-east-1b" = { az = "us-east-1b", new_bits = 4, net_num = 2 }
+    "db-us-east-1a"  = { az = "us-east-1a", new_bits = 4, net_num = 3 }
+    "db-us-east-1b"  = { az = "us-east-1b", new_bits = 4, net_num = 4 }
   }
 }

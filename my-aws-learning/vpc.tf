@@ -38,8 +38,8 @@ resource "aws_subnet" "public-subnets" {
 resource "aws_subnet" "private-subnets" {
   for_each                = var.private_subnet_configs
   vpc_id                  = aws_vpc.dev-vpc.id
-  cidr_block              = cidrsubnet(var.vpc_cidr_block, 4, each.value)
-  availability_zone       = each.key
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, each.value.new_bits, each.value.net_num)
+  availability_zone       = each.value.az
   map_public_ip_on_launch = false
 
   # lifecycle {
