@@ -8,6 +8,10 @@ resource "aws_vpc" "dev-vpc" {
   cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   tags = {
     Name = "${local.name_prefix}_vpc"
   }
@@ -20,6 +24,10 @@ resource "aws_subnet" "public-subnets" {
   cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, each.value)
   availability_zone       = each.key
   map_public_ip_on_launch = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
 
   tags = {
     Name = "${local.name_prefix}_public-subnet-${each.key}"
