@@ -1,3 +1,3 @@
-# Terraform with AWS
+# AWS Infrastructure as Code with Terraform
 
-This repository contains files and folders related to my self-study projects on Terraform with AWS.
+A collection of Terraform configurations demonstrating Terraform theory and AWS infrastructure deployment.
