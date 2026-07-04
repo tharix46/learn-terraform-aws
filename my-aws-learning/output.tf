@@ -100,4 +100,13 @@ output "private_subnet_info" {
     }
   }
 }
+
+output "internet_gateway_info" {
+  description = "details of the internet gateway"
+  value = {
+    id   = aws_internet_gateway.dev-igw.id
+    arn  = aws_internet_gateway.dev-igw.arn
+    name = aws_internet_gateway.dev-igw.tags_all["Name"]
+  }
+}
   
