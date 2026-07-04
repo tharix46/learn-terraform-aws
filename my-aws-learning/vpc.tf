@@ -50,3 +50,11 @@ resource "aws_subnet" "private-subnets" {
     Name = "${local.name_prefix}_private-subnet-${each.key}"
   }
 }
+
+resource "aws_internet_gateway" "dev-igw" {
+  vpc_id = aws_vpc.dev-vpc.id
+
+  tags = {
+    Name = "${local.name_prefix}_igw"
+  }
+}
