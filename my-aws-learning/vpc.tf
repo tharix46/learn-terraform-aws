@@ -51,10 +51,20 @@ resource "aws_subnet" "private-subnets" {
   }
 }
 
+# internet gateway
 resource "aws_internet_gateway" "dev-igw" {
   vpc_id = aws_vpc.dev-vpc.id
 
   tags = {
     Name = "${local.name_prefix}_igw"
+  }
+}
+
+# public route table
+resource "aws_route_table" "public-route-table" {
+  vpc_id = aws_vpc.dev-vpc.id
+
+  tags = {
+    Name = "${local.name_prefix}_public-route-table"
   }
 }
