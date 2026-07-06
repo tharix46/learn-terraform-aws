@@ -75,3 +75,10 @@ resource "aws_route" "public-subnet-default-route" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.dev-igw.id
 }
+
+# route table association with public subnets
+resource "aws_route_table_association" "public-route-table-association" {
+  for_each       = aws_subnet.public-subnets
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public-route-table.id
+}
