@@ -55,6 +55,10 @@ resource "aws_subnet" "private-subnets" {
 resource "aws_internet_gateway" "dev-igw" {
   vpc_id = aws_vpc.dev-vpc.id
 
+  lifecycle {
+    prevent_destroy = true
+  }
+
   tags = {
     Name = "${local.name_prefix}_igw"
   }
@@ -63,6 +67,10 @@ resource "aws_internet_gateway" "dev-igw" {
 # public route table
 resource "aws_route_table" "public-route-table" {
   vpc_id = aws_vpc.dev-vpc.id
+
+  lifecycle {
+    prevent_destroy = true
+  }
 
   tags = {
     Name = "${local.name_prefix}_public-route-table"
