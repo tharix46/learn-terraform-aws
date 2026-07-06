@@ -109,4 +109,23 @@ output "internet_gateway_info" {
     name = aws_internet_gateway.dev-igw.tags_all["Name"]
   }
 }
-  
+
+output "public_route_table_info" {
+  description = "details of the public route table"
+  value = {
+    id   = aws_route_table.public-route-table.id
+    arn  = aws_route_table.public-route-table.arn
+    name = aws_route_table.public-route-table.tags_all["Name"]
+  }
+}
+
+output "public_subnet_default_route_info" {
+  description = "details of the public subnet default route"
+  value = {
+    id                     = aws_route.public-subnet-default-route.id
+    state                  = aws_route.public-subnet-default-route.state
+    route_table_id         = aws_route.public-subnet-default-route.route_table_id
+    destination_cidr_block = aws_route.public-subnet-default-route.destination_cidr_block
+    gateway_id             = aws_route.public-subnet-default-route.gateway_id
+  }
+}
