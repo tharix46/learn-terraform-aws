@@ -68,3 +68,10 @@ resource "aws_route_table" "public-route-table" {
     Name = "${local.name_prefix}_public-route-table"
   }
 }
+
+# default route for public route table
+resource "aws_route" "public-subnet-default-route" {
+  route_table_id         = aws_route_table.public-route-table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.dev-igw.id
+}
