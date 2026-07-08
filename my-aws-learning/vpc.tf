@@ -9,7 +9,7 @@ resource "aws_vpc" "dev-vpc" {
   instance_tenancy = "default"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -26,7 +26,7 @@ resource "aws_subnet" "public-subnets" {
   map_public_ip_on_launch = true
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -43,7 +43,7 @@ resource "aws_subnet" "private-subnets" {
   map_public_ip_on_launch = false
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -56,7 +56,7 @@ resource "aws_internet_gateway" "dev-igw" {
   vpc_id = aws_vpc.dev-vpc.id
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -69,7 +69,7 @@ resource "aws_route_table" "public-route-table" {
   vpc_id = aws_vpc.dev-vpc.id
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -89,4 +89,25 @@ resource "aws_route_table_association" "public-route-table-association" {
   for_each       = aws_subnet.public-subnets
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public-route-table.id
+}
+
+resource "aws_eip" "nat-gw" {
+  for_each = var.public_subnet_configs
+  domain   = "vpc"
+
+  tags = {
+    Name = "${local.name_prefix}_nat-gw-eip_${each.key}"
+  }
+}
+
+resource "aws_nat_gateway" "nat-gw" {
+  for_each      = var.public_subnet_configs
+  allocation_id = aws_eip.nat-gw[each.key].id
+  subnet_id     = aws_subnet.public-subnets[each.key].id
+
+  depends_on = [aws_internet_gateway.dev-igw]
+
+  tags = {
+    Name = "${local.name_prefix}_nat-gw-${each.key}"
+  }
 }
