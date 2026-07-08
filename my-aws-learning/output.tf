@@ -129,3 +129,25 @@ output "public_subnet_default_route_info" {
     gateway_id             = aws_route.public-subnet-default-route.gateway_id
   }
 }
+
+output "nat_eip_info" {
+  description = "details of the nat eip"
+  value = {
+    for k, v in aws_eip.nat-gw : k => {
+      id   = v.id
+      arn  = v.arn
+      name = v.tags_all["Name"]
+    }
+  }
+}
+
+output "nat_gw_info" {
+  description = "details of nat gateways"
+  value = {
+    for k, v in aws_nat_gateway.nat-gw : k => {
+      id   = v.id
+      public_ip = v.public_ip
+      name = v.tags_all["Name"]
+    }
+  }
+}
