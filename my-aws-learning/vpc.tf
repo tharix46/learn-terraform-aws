@@ -91,23 +91,25 @@ resource "aws_route_table_association" "public-route-table-association" {
   route_table_id = aws_route_table.public-route-table.id
 }
 
-resource "aws_eip" "nat-gw" {
-  for_each = var.public_subnet_configs
-  domain   = "vpc"
+# # elastic ips for nat gateways
+# resource "aws_eip" "nat-gw" {
+#   for_each = var.public_subnet_configs
+#   domain   = "vpc"
 
-  tags = {
-    Name = "${local.name_prefix}_nat-gw-eip_${each.key}"
-  }
-}
+#   tags = {
+#     Name = "${local.name_prefix}_nat-gw-eip_${each.key}"
+#   }
+# }
 
-resource "aws_nat_gateway" "nat-gw" {
-  for_each      = var.public_subnet_configs
-  allocation_id = aws_eip.nat-gw[each.key].id
-  subnet_id     = aws_subnet.public-subnets[each.key].id
+# # nat gateways
+# resource "aws_nat_gateway" "nat-gw" {
+#   for_each      = var.public_subnet_configs
+#   allocation_id = aws_eip.nat-gw[each.key].id
+#   subnet_id     = aws_subnet.public-subnets[each.key].id
 
-  depends_on = [aws_internet_gateway.dev-igw]
+#   depends_on = [aws_internet_gateway.dev-igw]
 
-  tags = {
-    Name = "${local.name_prefix}_nat-gw-${each.key}"
-  }
-}
+#   tags = {
+#     Name = "${local.name_prefix}_nat-gw-${each.key}"
+#   }
+# }
