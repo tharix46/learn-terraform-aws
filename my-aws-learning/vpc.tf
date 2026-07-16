@@ -86,8 +86,8 @@ resource "aws_route" "public-subnet-default-route" {
 
 # route table association with public subnets
 resource "aws_route_table_association" "public-route-table-association" {
-  for_each       = aws_subnet.public-subnets
-  subnet_id      = each.value.id
+  for_each       = var.public_subnet_configs
+  subnet_id      = aws_subnet.public-subnets[each.key].id
   route_table_id = aws_route_table.public-route-table.id
 }
 
@@ -110,6 +110,6 @@ resource "aws_route_table_association" "public-route-table-association" {
 #   depends_on = [aws_internet_gateway.dev-igw]
 
 #   tags = {
-#     Name = "${local.name_prefix}_nat-gw-${each.key}"
+#     Name = "${local.name_prefix}_nat-gw_${each.key}"
 #   }
 # }
