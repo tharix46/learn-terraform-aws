@@ -127,3 +127,11 @@ resource "aws_route_table" "private-route-tables" {
     Name = "${local.name_prefix}_private-route-table_${each.key}"
   }
 }
+
+# default route per private route table
+resource "aws_route" "private-subnet-default-route" {
+  for_each               = var.public_subnet_configs
+  route_table_id         = aws_route_table.private-route-tables[each.key].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.nat-gw[each.key].id
+}
