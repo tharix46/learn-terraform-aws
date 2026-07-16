@@ -113,3 +113,17 @@ resource "aws_route_table_association" "public-route-table-association" {
 #     Name = "${local.name_prefix}_nat-gw_${each.key}"
 #   }
 # }
+
+# private route tables — one per AZ 
+resource "aws_route_table" "private-route-tables" {
+  for_each = var.public_subnet_configs
+  vpc_id   = aws_vpc.dev-vpc.id
+
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name = "${local.name_prefix}_private-route-table_${each.key}"
+  }
+}
