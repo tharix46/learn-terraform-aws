@@ -135,3 +135,10 @@ resource "aws_route" "private-subnet-default-route" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.nat-gw[each.key].id
 }
+
+# route table association with private subnets
+resource "aws_route_table_association" "private-route-table-association" {
+  for_each       = var.private_subnet_configs
+  subnet_id      = aws_subnet.private-subnets[each.key].id
+  route_table_id = aws_route_table.private-route-tables[each.value.az].id
+}
