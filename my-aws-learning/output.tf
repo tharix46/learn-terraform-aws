@@ -151,3 +151,27 @@ output "public_subnet_default_route_info" {
 #     }
 #   }
 # }
+
+output "private_route_tables_info" {
+  description = "details of the private route tables"
+  value = {
+    for k, v in aws_route_table.private-route-tables : k => {
+      id   = v.id
+      arn  = v.arn
+      name = v.tags_all["Name"]
+    }
+  }
+}
+
+output "private_subnets_default_routes_info" {
+  description = "details of the private subnet default route"
+  value = {
+    for k, v in aws_route.private-subnet-default-route : k => {
+      id                     = v.id
+      state                  = v.state
+      route_table_id         = v.route_table_id
+      destination_cidr_block = v.destination_cidr_block
+      nat_gateway_id         = v.nat_gateway_id
+    }
+  }
+}
