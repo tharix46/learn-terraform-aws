@@ -2,12 +2,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 6.57"
+      version = "~> 6.68"
     }
   }
-  required_version = "~> 1.15.0"
-}
 
-provider "aws" {
-  # Configuration options
+  # backend "s3" {
+  #   encrypt      = true
+  #   use_lockfile = true
+  # }
+
+  required_version = "~> 1.16.5"
 }
