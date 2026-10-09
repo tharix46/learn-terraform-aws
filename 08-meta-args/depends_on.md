@@ -2,7 +2,7 @@
 
 `depends_on` is used to handle explicit dependencies.
 
-It tells Terraform the exact order in which to create or destroy resources when it cannot figure it out automatically.
+It tells Terraform the exact order to create or destroy resources when it cannot figure it out automatically.
 
 ---
 

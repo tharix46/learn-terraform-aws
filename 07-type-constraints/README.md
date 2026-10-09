@@ -134,7 +134,7 @@ tf apply -auto-approve -var-file="dev.tfvars"
 
 tf providers lock --platform=linux_amd64
 
-tf destroy -auto-approve
+tf destroy -auto-approve -var-file="dev.tfvars"
 ```
 
 ---
