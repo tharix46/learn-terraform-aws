@@ -42,9 +42,17 @@ Write Terraform files → Run Terraform commands → Call AWS APIs through Terra
 ### Install & Configure Terraform (macOS)
 
 ```bash
-# install terraform
+# install terraform via homebrew
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
+
+# install terraform via tfenv
+brew install tfenv
+
+tfenv list-remote | head -n 5
+tfenv install <version>
+tfenv list
+tfenv use <version>
 
 # verify installation
 terraform -version
