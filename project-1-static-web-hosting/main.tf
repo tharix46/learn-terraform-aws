@@ -24,7 +24,7 @@ resource "aws_s3_bucket_versioning" "static-web" {
 
   versioning_configuration {
     status = "Enabled"
-  }
+}
 }
 
 # block public access
@@ -35,4 +35,13 @@ resource "aws_s3_bucket_public_access_block" "static-web" {
   block_public_policy     = true
   ignore_public_acls      = true
   restrict_public_buckets = true
+}
+
+# cloudfront origin access control
+resource "aws_cloudfront_origin_access_control" "static-web" {
+  name                              = "static-web-origin-access-control"
+  description                       = "CloudFront origin access control for S3 bucket ${aws_s3_bucket.static-web.bucket}"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }
