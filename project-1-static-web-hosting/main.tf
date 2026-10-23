@@ -45,3 +45,30 @@ resource "aws_cloudfront_origin_access_control" "static-web" {
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
+
+# bucket policy to allow cloudfront to read objects in the bucket
+data "aws_iam_policy_document" "cloudfront-oac" {
+  statement {
+    sid    = "AllowCloudFrontServicePrincipalReadAccess"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetObject"
+    ]
+
+    resources = [
+      "${aws_s3_bucket.static-web.arn}/*",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.static-web.arn]
+    }
+  }
+}
