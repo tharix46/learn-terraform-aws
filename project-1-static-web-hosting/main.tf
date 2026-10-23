@@ -4,13 +4,12 @@ data "aws_region" "current" {}
 
 resource "aws_s3_bucket" "static-web" {
 
-  bucket = "${local.name_prefix}_${data.aws_caller_identity.current.account_id}_${data.aws_region.current.region}-an"
+  bucket = replace("${local.name_prefix}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.region}-an", "_", "-")
 
   # enable the account regional namespace feature
   bucket_namespace = "account-regional"
 
   lifecycle {
-    # TODO: set this to true
     prevent_destroy = true
   }
 
@@ -19,9 +18,21 @@ resource "aws_s3_bucket" "static-web" {
   }
 }
 
+# enable bucket versioning
 resource "aws_s3_bucket_versioning" "static-web" {
   bucket = aws_s3_bucket.static-web.id
+
   versioning_configuration {
     status = "Enabled"
   }
+}
+
+# block public access
+resource "aws_s3_bucket_public_access_block" "static-web" {
+  bucket = aws_s3_bucket.static-web.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
