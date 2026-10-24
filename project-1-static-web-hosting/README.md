@@ -65,6 +65,8 @@ tf plan -var-file="dev.tfvars"
 
 tf apply -auto-approve -var-file="dev.tfvars"
 
+tf providers lock --platform=linux_amd64
+
 tf graph | dot -Tsvg > graph.svg
 
 tf output
