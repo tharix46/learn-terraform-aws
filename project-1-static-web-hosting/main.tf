@@ -10,8 +10,7 @@ resource "aws_s3_bucket" "static_web" {
   bucket_namespace = "account-regional"
 
   lifecycle {
-    # TODO: set to true after testing
-    prevent_destroy = false
+    prevent_destroy = True
   }
 
   tags = {
