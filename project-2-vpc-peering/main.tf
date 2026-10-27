@@ -206,3 +206,53 @@ resource "aws_route" "secondary_to_primary" {
 
   depends_on = [aws_vpc_peering_connection_accepter.secondary_accepter]
 }
+
+# security group for the primary vpc EC2 instance
+resource "aws_security_group" "primary" {
+  name        = local.name_prefix
+  description = "primary vpc EC2 instance security group"
+  vpc_id      = aws_vpc.primary.id
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = {
+    Name = "${local.name_prefix}"
+  }
+}
+
+# INGRESS rules for the primary vpc security group
+# allow ssh access from anywhere
+resource "aws_vpc_security_group_ingress_rule" "primary_allow-ssh" {
+  security_group_id = aws_security_group.primary.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+
+  tags = {
+    Name = "${local.name_prefix}_allow_ssh"
+  }
+}
+
+# allow ICMP from secondary VPC
+resource "aws_vpc_security_group_ingress_rule" "primary_allow-icmp" {
+  security_group_id = aws_security_group.primary.id
+  cidr_ipv4         = var.secondary_vpc_cidr_block
+  from_port         = -1
+  ip_protocol       = "icmp"
+  to_port           = -1
+
+  tags = {
+    Name = "${local.name_prefix}_allow_icmp"
+  }
+}
+
+# EGRESS rules for the primary vpc security group
+# all outbound all traffic 
+resource "aws_vpc_security_group_egress_rule" "primary_allow-all" {
+  security_group_id = aws_security_group.primary.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+}
