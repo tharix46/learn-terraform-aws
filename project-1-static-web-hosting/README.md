@@ -75,3 +75,9 @@ tf destroy -auto-approve -var-file="dev.tfvars"
 ```
 
 ---
+
+### Dependency Graph
+
+![Dependency Graph](./graph.svg)
+
+---
