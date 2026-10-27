@@ -159,3 +159,16 @@ resource "aws_route_table" "secondary" {
     Name = "${local.name_prefix}_public"
   }
 }
+
+# route table association with primary vpc subnet
+resource "aws_route_table_association" "primary" {
+  subnet_id      = aws_subnet.primary.id
+  route_table_id = aws_route_table.primary.id
+}
+
+# route table association with secondary vpc subnet
+resource "aws_route_table_association" "secondary" {
+  provider       = aws.secondary
+  subnet_id      = aws_subnet.secondary.id
+  route_table_id = aws_route_table.secondary.id
+}
