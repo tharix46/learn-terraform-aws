@@ -172,3 +172,18 @@ resource "aws_route_table_association" "secondary" {
   subnet_id      = aws_subnet.secondary.id
   route_table_id = aws_route_table.secondary.id
 }
+
+# default route for primary vpc subnet route table
+resource "aws_route" "default_route_primary" {
+  route_table_id         = aws_route_table.primary.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.primary.id
+}
+
+# default route for secondary vpc subnet route table
+resource "aws_route" "default_route_secondary" {
+  provider               = aws.secondary
+  route_table_id         = aws_route_table.secondary.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.secondary.id
+}
