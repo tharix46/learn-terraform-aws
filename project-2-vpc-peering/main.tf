@@ -76,3 +76,32 @@ resource "aws_subnet" "secondary" {
     Name = "${local.name_prefix}_public-subnet"
   }
 }
+
+# primary vpc internet gateway
+resource "aws_internet_gateway" "primary" {
+  vpc_id = aws_vpc.primary.id
+
+#TODO: make these true
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name = "${local.name_prefix}_igw"
+  }
+}
+
+# secondary vpc internet gateway
+resource "aws_internet_gateway" "secondary" {
+  provider = aws.secondary
+  vpc_id = aws_vpc.secondary.id
+
+#TODO: make these true
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name = "${local.name_prefix}_igw"
+  }
+}
