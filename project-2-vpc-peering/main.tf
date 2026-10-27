@@ -131,4 +131,31 @@ resource "aws_vpc_peering_connection_accepter" "secondary_accepter" {
   }
 }
 
+# primary VPC route table
+resource "aws_route_table" "primary" {
+  vpc_id = aws_vpc.primary.id
 
+  #TODO: make these true
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name = "${local.name_prefix}_public"
+  }
+}
+
+# secondary VPC route table
+resource "aws_route_table" "secondary" {
+  provider = aws.secondary
+  vpc_id   = aws_vpc.secondary.id
+
+  #TODO: make these true
+  lifecycle {
+    prevent_destroy = false
+  }
+
+  tags = {
+    Name = "${local.name_prefix}_public"
+  }
+}
