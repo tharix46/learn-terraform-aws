@@ -187,3 +187,22 @@ resource "aws_route" "default_route_secondary" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.secondary.id
 }
+
+# route to Secondary VPC in primary route table
+resource "aws_route" "primary_to_secondary" {
+  route_table_id            = aws_route_table.primary.id
+  destination_cidr_block    = var.secondary_vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.primary_to_secondary.id
+
+  depends_on = [aws_vpc_peering_connection_accepter.secondary_accepter]
+}
+
+# route to Primary VPC in secondary route table
+resource "aws_route" "secondary_to_primary" {
+  provider                  = aws.secondary
+  route_table_id            = aws_route_table.secondary.id
+  destination_cidr_block    = var.primary_vpc_cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.primary_to_secondary.id
+
+  depends_on = [aws_vpc_peering_connection_accepter.secondary_accepter]
+}
