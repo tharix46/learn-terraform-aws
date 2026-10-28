@@ -45,3 +45,33 @@ resource "aws_iam_group" "accountants" {
   name = "accountants"
   path = "/groups/"
 }
+
+# add users to the education group
+resource "aws_iam_group_membership" "education_membership" {
+  name  = "education-group-membership"
+  group = aws_iam_group.education.name
+
+  users = [
+    for user in aws_iam_user.users : user.name if user.tags.Department == "Education"
+  ]
+}
+
+# add users to the managers group
+resource "aws_iam_group_membership" "managers_membership" {
+  name  = "managers-group-membership"
+  group = aws_iam_group.managers.name
+
+  users = [
+    for user in aws_iam_user.users : user.name if can(regex("Manager|CEO", user.tags.JobTitle))
+  ]
+}
+
+# add users to the accountants group
+resource "aws_iam_group_membership" "accountants_membership" {
+  name  = "accountants-group-membership"
+  group = aws_iam_group.accountants.name
+
+  users = [
+    for user in aws_iam_user.users : user.name if user.tags.Department == "Accounting"
+  ]
+}
