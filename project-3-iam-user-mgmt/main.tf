@@ -29,3 +29,19 @@ resource "aws_iam_user_login_profile" "users" {
     ]
   }
 }
+
+# create IAM groups
+resource "aws_iam_group" "education" {
+  name = "education"
+  path = "/groups/"
+}
+
+resource "aws_iam_group" "managers" {
+  name = "managers"
+  path = "/groups/"
+}
+
+resource "aws_iam_group" "accountants" {
+  name = "accountants"
+  path = "/groups/"
+}
